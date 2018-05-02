@@ -44,6 +44,9 @@ public:
 #if WINAPI_XWINDOWS
     bool                m_disableXInitThreads;
     int                 m_runAsUid;
+    bool                m_hid;
+    String              m_mouseDevice;
+    String              m_keyboardDevice;
 #endif
     bool                m_shouldExit;
     String                m_synergyAddress;

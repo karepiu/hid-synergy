@@ -38,6 +38,9 @@ m_enableDragDrop(false),
 #if WINAPI_XWINDOWS
 m_disableXInitThreads(false),
 m_runAsUid(-1),
+m_hid(true),
+m_mouseDevice(""),
+m_keyboardDevice(""),
 #endif
 m_shouldExit(false),
 m_profileDirectory(""),

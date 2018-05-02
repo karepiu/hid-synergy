@@ -151,6 +151,12 @@ ArgParser::parsePlatformArg(ArgsBase& argsBase, const int& argc, const char* con
         argsBase.m_disableXInitThreads = true;
     }
 
+    else if (isArg(i, argc, argv, nullptr, "--hid", 2)) {
+        argsBase.m_hid = true;
+        argsBase.m_mouseDevice = argv[++i];
+        argsBase.m_keyboardDevice = argv[++i];
+    }
+
     else {
         // option not supported here
         return false;

@@ -36,7 +36,7 @@ if (APPLE)
 endif()
 
 include_directories(${inc})
-add_library(platform STATIC ${sources})
+add_library(platform STATIC ${sources} HIDScreen.cpp HIDScreen.h)
 target_link_libraries(platform client ${libs})
 
 if (UNIX)
