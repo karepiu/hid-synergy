@@ -5,6 +5,7 @@
 #pragma once
 
 #include "core/PlatformScreen.h"
+#include "HIDKeyState.h"
 
 class HIDScreen : public PlatformScreen {
 public:
@@ -65,6 +66,10 @@ protected:
 private:
     std::string         m_mouseDevice;
     std::string         m_keyboardDevice;
+
     IEventQueue*        m_events;
+    synergy::KeyMap     m_keyMap;
+
+    HIDKeyState*        m_keyState;
 };
 
