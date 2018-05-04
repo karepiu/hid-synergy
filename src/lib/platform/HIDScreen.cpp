@@ -9,10 +9,14 @@
 HIDScreen::HIDScreen(
         const std::string & mouseDevice,
         const std::string & keyboardDevice,
+        int screenWidth,
+        int screenHeight,
         IEventQueue *events) :
     PlatformScreen(events),
     m_mouseDevice(mouseDevice),
     m_keyboardDevice(keyboardDevice),
+    m_screenWidth(screenWidth),
+    m_screenHeight(screenHeight),
     m_events(events),
     m_keyState(nullptr)
 {
@@ -50,11 +54,17 @@ bool HIDScreen::getClipboard(ClipboardID id, IClipboard *) const
 
 void HIDScreen::getShape(SInt32 &x, SInt32 &y, SInt32 &w, SInt32 &h) const
 {
+    x = 0;
+    y = 0;
+    w = m_screenWidth;
+    h = m_screenHeight;
     // TODO
 }
 
 void HIDScreen::getCursorPos(SInt32 &x, SInt32 &y) const
 {
+    x = 0;
+    y = 0;
     // TODO
 }
 

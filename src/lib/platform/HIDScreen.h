@@ -10,6 +10,7 @@
 class HIDScreen : public PlatformScreen {
 public:
     HIDScreen(const std::string & mouseDevice, const std::string & keyboardDevice,
+              int screenWidth, int screenHeight,
               IEventQueue *events);
     virtual ~HIDScreen();
 
@@ -66,6 +67,8 @@ protected:
 private:
     std::string         m_mouseDevice;
     std::string         m_keyboardDevice;
+    int                 m_screenWidth;
+    int                 m_screenHeight;
 
     IEventQueue*        m_events;
     synergy::KeyMap     m_keyMap;

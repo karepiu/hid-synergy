@@ -47,6 +47,8 @@ public:
     bool                m_hid;
     String              m_mouseDevice;
     String              m_keyboardDevice;
+    int                 m_screenWidth;
+    int                 m_screenHeight;
 #endif
     bool                m_shouldExit;
     String                m_synergyAddress;
