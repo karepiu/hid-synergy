@@ -2,6 +2,7 @@
 // Created by xela on 5/3/18.
 //
 
+#include <base/Log.h>
 #include "HIDMouse.h"
 
 HIDMouse::HIDMouse(
@@ -34,11 +35,13 @@ void HIDMouse::updateButton(ButtonID button, bool press) {
 
     default:
         mask = 0x00;
-
+        break;
     }
 
     // Check if the button needs to be toggled
-    if (m_data[0] & mask != press) {
+    if (press && (m_data[0] & mask) == 0) {
+        m_data[0] ^= mask;
+    } else if (!press && (m_data[0] & mask) != 0) {
         m_data[0] ^= mask;
     }
 

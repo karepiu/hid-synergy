@@ -2,6 +2,7 @@
 // Created by xela on 5/3/18.
 //
 
+#include "base/Log.h"
 #include "HIDDevice.h"
 
 HIDDevice::HIDDevice(
@@ -10,7 +11,7 @@ HIDDevice::HIDDevice(
     m_dataSize(dataSize)
 {
     m_device = new std::ofstream();
-    m_device->open(path);
+    m_device->open(path, std::ofstream::binary);
 
     m_data = new UInt8[m_dataSize];
     std::fill(m_data, m_data + m_dataSize, 0);
