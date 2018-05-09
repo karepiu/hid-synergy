@@ -7,16 +7,18 @@
 #include "HIDScreen.h"
 
 HIDScreen::HIDScreen(
-        const std::string & mouseDevice,
-        const std::string & keyboardDevice,
-        int screenWidth,
-        int screenHeight,
+        const std::string& mouseDevice,
+        const std::string& keyboardDevice,
+        SInt32 screenWidth,
+        SInt32 screenHeight,
         IEventQueue *events) :
     PlatformScreen(events),
     m_mouseDevice(mouseDevice),
-    m_keyboardDevice(keyboardDevice),
-    m_screenWidth(screenWidth),
-    m_screenHeight(screenHeight),
+    //m_keyboardDevice(keyboardDevice),
+    m_w(screenWidth),
+    m_h(screenHeight),
+    m_mousex(-1),
+    m_mousey(-1),
     m_events(events),
     m_keyState(nullptr)
 {
@@ -46,7 +48,7 @@ void *HIDScreen::getEventTarget() const
     return const_cast<HIDScreen*>(this);
 }
 
-bool HIDScreen::getClipboard(ClipboardID id, IClipboard *) const
+bool HIDScreen::getClipboard(ClipboardID /*unused*/, IClipboard* /*unused*/) const
 {
     // Not supported
     return false;
@@ -56,9 +58,8 @@ void HIDScreen::getShape(SInt32 &x, SInt32 &y, SInt32 &w, SInt32 &h) const
 {
     x = 0;
     y = 0;
-    w = m_screenWidth;
-    h = m_screenHeight;
-    // TODO
+    w = m_w;
+    h = m_h;
 }
 
 void HIDScreen::getCursorPos(SInt32 &x, SInt32 &y) const
@@ -118,16 +119,20 @@ void HIDScreen::getCursorCenter(SInt32 &x, SInt32 &y) const
 
 void HIDScreen::fakeMouseButton(ButtonID button, bool press)
 {
+    LOG((CLOG_DEBUG "fakeMouseButton: (%d %d)", button, press));
+    m_mouseDevice.updateButton(button, press);
     // TODO
 }
 
 void HIDScreen::fakeMouseMove(SInt32 x, SInt32 y)
 {
+    LOG((CLOG_DEBUG "fakeMouseMove: (%d %d)", x, y));
     // TODO
 }
 
 void HIDScreen::fakeMouseRelativeMove(SInt32 dx, SInt32 dy) const
 {
+    LOG((CLOG_DEBUG "fakeMouseRelativeMove: (%d %d)", dx, dy));
     // TODO
 }
 
@@ -138,22 +143,23 @@ void HIDScreen::fakeMouseWheel(SInt32 xDelta, SInt32 yDelta) const
 
 void HIDScreen::enable()
 {
-    // TODO
+    // Do nothing
 }
 
 void HIDScreen::disable()
 {
-    // TODO
+    // Do nothing
 }
 
 void HIDScreen::enter()
 {
-    // TODO
+    // Assume the mouse location is unknown again
+    m_mousex = -1;
+    m_mousey = -1;
 }
 
 bool HIDScreen::leave()
 {
-    // TODO
     return true;
 }
 

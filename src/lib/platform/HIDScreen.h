@@ -6,6 +6,7 @@
 
 #include "core/PlatformScreen.h"
 #include "HIDKeyState.h"
+#include "HIDMouse.h"
 
 class HIDScreen : public PlatformScreen {
 public:
@@ -65,10 +66,11 @@ protected:
     virtual IKeyState*    getKeyState() const;
 
 private:
-    std::string         m_mouseDevice;
-    std::string         m_keyboardDevice;
-    int                 m_screenWidth;
-    int                 m_screenHeight;
+    HIDMouse            m_mouseDevice;
+    //HIDKeyboard         m_keyboardDevice;
+    SInt32              m_w, m_h;
+    int                 m_mousex;
+    int                 m_mousey;
 
     IEventQueue*        m_events;
     synergy::KeyMap     m_keyMap;
