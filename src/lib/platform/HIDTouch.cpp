@@ -28,11 +28,11 @@ void HIDTouch::move(float xFrac, float yFrac) {
 
     LOG((CLOG_DEBUG "%u %u", xCoord, yCoord));
 
-    m_data[1] = xPtr[0];
-    m_data[2] = xPtr[1];
+    m_data[1] = xPtr[1];
+    m_data[2] = xPtr[0];
 
-    m_data[3] = yPtr[0];
-    m_data[4] = yPtr[1];
+    m_data[3] = yPtr[1];
+    m_data[4] = yPtr[0];
 
     LOG((CLOG_DEBUG "%u %u, %u %u", m_data[1], m_data[2], m_data[3], m_data[4]));
 
