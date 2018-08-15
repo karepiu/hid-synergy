@@ -23,11 +23,18 @@ void HIDTouch::move(float xFrac, float yFrac) {
     auto xCoord = (UInt32) (xFrac * RESOLUTION);
     auto yCoord = (UInt32) (yFrac * RESOLUTION);
 
-    m_data[1] = xCoord >> 8;
-    m_data[2] = xCoord & 127;
+    auto xPtr = (char *)&xCoord;
+    auto yPtr = (char *)&yCoord;
 
-    m_data[3] = yCoord >> 8;
-    m_data[4] = yCoord & 127;
+    LOG((CLOG_DEBUG "%u %u", xCoord, yCoord));
+
+    m_data[1] = xPtr[0];
+    m_data[2] = xPtr[1];
+
+    m_data[3] = yPtr[0];
+    m_data[4] = yPtr[1];
+
+    LOG((CLOG_DEBUG "%u %u, %u %u", m_data[1], m_data[2], m_data[3], m_data[4]));
 
     update();
 }
