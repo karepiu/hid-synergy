@@ -19,8 +19,6 @@ HIDDevice::HIDDevice(
     }
 
     m_data = new char[m_dataSize];
-    LOG((CLOG_DEBUG "initial: %d %d %d %d", m_data[0], m_data[1], m_data[2], dataSize));
-
     memset(m_data, 0, m_dataSize);
 }
 
@@ -31,9 +29,13 @@ HIDDevice::~HIDDevice()
 }
 
 void HIDDevice::update() {
-    LOG((CLOG_DEBUG "updating: %d %d %d", m_data[0], m_data[1], m_data[2]));
+    size_t written = 0;
 
-    if (write(m_fd, m_data, m_dataSize) != m_dataSize) {
-        throw std::runtime_error("failed to write to HID device");
+    while (written < m_dataSize) {
+        ssize_t result = write(m_fd, m_data + written, m_dataSize - written);
+        if (result < 0) {
+            throw std::runtime_error("failed to write to HID device");
+        }
+        written += result;
     }
 }
