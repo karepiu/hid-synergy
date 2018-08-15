@@ -15,5 +15,5 @@ public:
 
 private:
     static const UInt32 RESOLUTION = 65536;
-    static const UInt32 DATA_SIZE = 3;
+    static const UInt32 DATA_SIZE = 5;
 };
