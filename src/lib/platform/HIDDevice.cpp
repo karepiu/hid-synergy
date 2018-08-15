@@ -3,28 +3,37 @@
 //
 
 #include "base/Log.h"
+#include "core/XScreen.h"
 #include "HIDDevice.h"
+
+#include <unistd.h>
+#include <fcntl.h>
 
 HIDDevice::HIDDevice(
         const std::string &path,
         UInt32 dataSize) :
     m_dataSize(dataSize)
 {
-    m_device = new std::ofstream();
-    m_device->open(path, std::ofstream::binary);
+    if ((m_fd = open(path.c_str(), O_RDWR, 0666)) == -1) {
+        throw XScreenOpenFailure("failed to open HID device");
+    }
 
-    m_data = new UInt8[m_dataSize];
-    std::fill(m_data, m_data + m_dataSize, 0);
+    m_data = new char[m_dataSize];
+    LOG((CLOG_DEBUG "initial: %d %d %d %d", m_data[0], m_data[1], m_data[2], dataSize));
+
+    memset(m_data, 0, m_dataSize);
 }
 
 HIDDevice::~HIDDevice()
 {
-    m_device->close();
-    delete m_device;
-
+    close(m_fd);
     delete m_data;
 }
 
 void HIDDevice::update() {
-    m_device->write((char *)m_data, m_dataSize);
+    LOG((CLOG_DEBUG "updating: %d %d %d", m_data[0], m_data[1], m_data[2]));
+
+    if (write(m_fd, m_data, m_dataSize) != m_dataSize) {
+        throw std::runtime_error("failed to write to HID device");
+    }
 }

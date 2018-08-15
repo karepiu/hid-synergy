@@ -14,10 +14,10 @@ public:
     virtual ~HIDDevice();
 
 protected:
-    UInt32 m_dataSize;
-    UInt8* m_data;
+    size_t m_dataSize;
+    char* m_data;
     void update();
 
 private:
-    std::ofstream* m_device;
+    int m_fd;
 };

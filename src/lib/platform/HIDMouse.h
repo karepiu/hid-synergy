@@ -15,5 +15,5 @@ public:
     void updateButton(ButtonID button, bool press);
 
 private:
-    const UInt32 DATA_SIZE = 3;
+    static const UInt32 DATA_SIZE = 3;
 };
