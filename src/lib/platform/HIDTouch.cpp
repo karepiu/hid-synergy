@@ -19,9 +19,15 @@ HIDTouch::~HIDTouch() {
 void HIDTouch::move(float xFrac, float yFrac) {
 
     m_data[0] = 0x02;
-    m_data[1] = (int) (xFrac * RESOLUTION);
-    m_data[2] = (int) (yFrac * RESOLUTION);
-    LOG((CLOG_DEBUG "x: %d, y: %d", m_data[1], m_data[2]));
+
+    auto xCoord = (UInt32) (xFrac * RESOLUTION);
+    auto yCoord = (UInt32) (yFrac * RESOLUTION);
+
+    m_data[1] = xCoord >> 8;
+    m_data[2] = xCoord & 127;
+
+    m_data[3] = yCoord >> 8;
+    m_data[4] = yCoord & 127;
 
     update();
 }

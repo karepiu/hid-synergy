@@ -14,6 +14,6 @@ public:
     void move(float xFrac, float yFrac);
 
 private:
-    static const UInt32 RESOLUTION = 128;
+    static const UInt32 RESOLUTION = 65536;
     static const UInt32 DATA_SIZE = 3;
 };
