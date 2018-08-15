@@ -41,6 +41,7 @@ m_runAsUid(-1),
 m_hid(false),
 m_mouseDevice(""),
 m_keyboardDevice(""),
+m_touchDevice(""),
 m_screenWidth(0),
 m_screenHeight(0),
 #endif

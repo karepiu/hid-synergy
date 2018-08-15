@@ -9,12 +9,14 @@
 HIDScreen::HIDScreen(
         const std::string& mouseDevice,
         const std::string& keyboardDevice,
+        const std::string& touchDevice,
         SInt32 screenWidth,
         SInt32 screenHeight,
         IEventQueue *events) :
     PlatformScreen(events),
     m_mouseDevice(mouseDevice),
     //m_keyboardDevice(keyboardDevice),
+    m_touchDevice(touchDevice),
     m_w(screenWidth),
     m_h(screenHeight),
     m_mousex(-1),
@@ -121,13 +123,12 @@ void HIDScreen::fakeMouseButton(ButtonID button, bool press)
 {
     LOG((CLOG_DEBUG "fakeMouseButton: (%d %d)", button, press));
     m_mouseDevice.updateButton(button, press);
-    // TODO
 }
 
 void HIDScreen::fakeMouseMove(SInt32 x, SInt32 y)
 {
     LOG((CLOG_DEBUG "fakeMouseMove: (%d %d)", x, y));
-    // TODO
+    m_touchDevice.move(((float) x) / m_w, ((float) y) / m_h);
 }
 
 void HIDScreen::fakeMouseRelativeMove(SInt32 dx, SInt32 dy) const

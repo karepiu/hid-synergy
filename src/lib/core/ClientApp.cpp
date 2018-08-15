@@ -180,7 +180,7 @@ ClientApp::createScreen()
 #elif WINAPI_XWINDOWS
     if (args().m_hid) {
         return new synergy::Screen(new HIDScreen(
-                args().m_mouseDevice, args().m_keyboardDevice,
+                args().m_mouseDevice, args().m_keyboardDevice, args().m_touchDevice,
                 args().m_screenWidth, args().m_screenHeight,
                 m_events), m_events);
         //m_bye(kExitArgs);
