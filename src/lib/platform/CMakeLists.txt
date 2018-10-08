@@ -36,7 +36,7 @@ if (APPLE)
 endif()
 
 include_directories(${inc})
-add_library(platform STATIC ${sources} HIDScreen.cpp HIDScreen.h HIDKeyState.cpp HIDKeyState.h HIDDevice.cpp HIDDevice.h HIDMouse.cpp HIDMouse.h HIDTouch.cpp HIDTouch.h)
+add_library(platform STATIC ${sources} HIDScreen.cpp HIDScreen.h HIDKeyState.cpp HIDKeyState.h HIDDevice.cpp HIDDevice.h HIDMouse.cpp HIDMouse.h HIDTouch.cpp HIDTouch.h HIDKeyboard.cpp HIDKeyboard.h)
 target_link_libraries(platform client ${libs})
 
 if (UNIX)

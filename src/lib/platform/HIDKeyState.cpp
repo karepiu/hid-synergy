@@ -6,14 +6,24 @@
 
 HIDKeyState::HIDKeyState(
         IEventQueue* events) :
-        KeyState(events)
+        KeyState(events),
+        m_keyboardDevice(nullptr)
 {
     init();
 }
 
 HIDKeyState::HIDKeyState(
         IEventQueue* events, synergy::KeyMap& keyMap) :
-        KeyState(events, keyMap)
+        KeyState(events, keyMap),
+        m_keyboardDevice(nullptr)
+{
+    init();
+}
+
+HIDKeyState::HIDKeyState(
+        IEventQueue *events, synergy::KeyMap& keyMap, HIDKeyboard keyboardDevice) :
+        KeyState(events, keyMap),
+        m_keyboardDevice(keyboardDevice)
 {
     init();
 }
@@ -57,5 +67,7 @@ void HIDKeyState::getKeyMap(synergy::KeyMap &keyMap)
 
 void HIDKeyState::fakeKey(const KeyState::Keystroke &keystroke)
 {
-    // TODO
+    if (keystroke.m_type == Keystroke::kButton) {
+        m_keyboardDevice.updateKey(keystroke.m_data.m_button.m_button, keystroke.m_data.m_button.m_press);
+    }
 }

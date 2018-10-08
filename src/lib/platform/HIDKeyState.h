@@ -5,11 +5,13 @@
 #pragma once
 
 #include "core/KeyState.h"
+#include "HIDKeyboard.h"
 
 class HIDKeyState : public KeyState {
 public:
     HIDKeyState(IEventQueue* events);
     HIDKeyState(IEventQueue* events, synergy::KeyMap& keyMap);
+    HIDKeyState(IEventQueue *events, synergy::KeyMap& keyMap, HIDKeyboard keyboardDevice);
     ~HIDKeyState();
 
     // IKeyState overrides
@@ -25,5 +27,6 @@ protected:
 
 private:
     void                init();
+    HIDKeyboard         m_keyboardDevice;
 };
 

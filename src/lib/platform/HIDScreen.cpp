@@ -15,7 +15,7 @@ HIDScreen::HIDScreen(
         IEventQueue *events) :
     PlatformScreen(events),
     m_mouseDevice(mouseDevice),
-    //m_keyboardDevice(keyboardDevice),
+    m_keyboardDevice(keyboardDevice),
     m_touchDevice(touchDevice),
     m_w(screenWidth),
     m_h(screenHeight),

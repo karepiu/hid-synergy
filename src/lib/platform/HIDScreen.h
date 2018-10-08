@@ -5,6 +5,7 @@
 #pragma once
 
 #include "core/PlatformScreen.h"
+#include "HIDKeyboard.h"
 #include "HIDKeyState.h"
 #include "HIDMouse.h"
 #include "HIDTouch.h"
@@ -70,7 +71,7 @@ protected:
 
 private:
     HIDMouse            m_mouseDevice;
-    //HIDKeyboard         m_keyboardDevice;
+    HIDKeyboard         m_keyboardDevice;
     HIDTouch            m_touchDevice;
     SInt32              m_w, m_h;
     int                 m_mousex;
