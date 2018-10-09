@@ -7,7 +7,7 @@
 HIDKeyState::HIDKeyState(
         IEventQueue* events) :
         KeyState(events),
-        m_keyboardDevice(nullptr)
+        m_keyboardDevice("/dev/null")
 {
     init();
 }
@@ -15,7 +15,7 @@ HIDKeyState::HIDKeyState(
 HIDKeyState::HIDKeyState(
         IEventQueue* events, synergy::KeyMap& keyMap) :
         KeyState(events, keyMap),
-        m_keyboardDevice(nullptr)
+        m_keyboardDevice("/dev/null")
 {
     init();
 }
