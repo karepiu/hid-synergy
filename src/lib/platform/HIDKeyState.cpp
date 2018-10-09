@@ -67,11 +67,11 @@ void HIDKeyState::getKeyMap(synergy::KeyMap &keyMap)
 }
 
 void HIDKeyState::fakeKeyDown(KeyID id, KeyModifierMask mask, KeyButton serverID) {
-    LOG((CLOG_DEBUG "fakeKeyDown"));
+    LOG((CLOG_DEBUG "fakeKeyDown (%d)", serverID));
 }
 
 bool HIDKeyState::fakeKeyUp(KeyButton serverID) {
-    LOG((CLOG_DEBUG "fakeKeyUp"));
+    LOG((CLOG_DEBUG "fakeKeyUp (%d)", serverID));
     return false;
 }
 
