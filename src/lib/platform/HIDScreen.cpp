@@ -26,7 +26,7 @@ HIDScreen::HIDScreen(
 {
     // TODO
 
-    m_keyState = new HIDKeyState(events, m_keyMap);
+    m_keyState = new HIDKeyState(events, m_keyMap, m_keyboardDevice);
 
     // install event handlers
     m_events->adoptHandler(Event::kSystem, m_events->getSystemTarget(),

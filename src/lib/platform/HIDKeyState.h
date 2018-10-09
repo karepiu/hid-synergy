@@ -19,6 +19,9 @@ public:
     virtual KeyModifierMask pollActiveModifiers() const;
     virtual SInt32      pollActiveGroup() const;
     virtual void        pollPressedKeys(KeyButtonSet& pressedKeys) const;
+    virtual void        fakeKeyDown(KeyID id, KeyModifierMask mask,
+                                    KeyButton serverID);
+    virtual bool        fakeKeyUp(KeyButton serverID);
 
 protected:
     // KeyState overrides

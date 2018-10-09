@@ -2,6 +2,7 @@
 // Created by xela on 5/3/18.
 //
 
+#include <base/Log.h>
 #include "HIDKeyState.h"
 
 HIDKeyState::HIDKeyState(
@@ -63,6 +64,15 @@ void HIDKeyState::pollPressedKeys(IKeyState::KeyButtonSet &pressedKeys) const
 void HIDKeyState::getKeyMap(synergy::KeyMap &keyMap)
 {
     // TODO
+}
+
+void HIDKeyState::fakeKeyDown(KeyID id, KeyModifierMask mask, KeyButton serverID) {
+    LOG((CLOG_DEBUG "fakeKeyDown"));
+}
+
+bool HIDKeyState::fakeKeyUp(KeyButton serverID) {
+    LOG((CLOG_DEBUG "fakeKeyUp"));
+    return false;
 }
 
 void HIDKeyState::fakeKey(const KeyState::Keystroke &keystroke)
