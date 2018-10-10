@@ -67,17 +67,24 @@ void HIDKeyState::getKeyMap(synergy::KeyMap &keyMap)
 }
 
 void HIDKeyState::fakeKeyDown(KeyID id, KeyModifierMask mask, KeyButton serverID) {
-    LOG((CLOG_DEBUG "fakeKeyDown (%d)", serverID));
+    LOG((CLOG_DEBUG "fakeKeyDown (%d, %d)", serverID, id));
+    m_serverIDToKeyIDMap[serverID] = id;
+    m_keyboardDevice.updateKey(id, true);
 }
 
 bool HIDKeyState::fakeKeyUp(KeyButton serverID) {
     LOG((CLOG_DEBUG "fakeKeyUp (%d)", serverID));
-    return false;
+    auto id = m_serverIDToKeyIDMap.find(serverID);
+    if (id == m_serverIDToKeyIDMap.end()) {
+        return false;
+    } else {
+        m_keyboardDevice.updateKey(id->second, false);
+        m_serverIDToKeyIDMap.erase(serverID);
+        return true;
+    }
 }
 
 void HIDKeyState::fakeKey(const KeyState::Keystroke &keystroke)
 {
-    if (keystroke.m_type == Keystroke::kButton) {
-        m_keyboardDevice.updateKey(keystroke.m_data.m_button.m_button, keystroke.m_data.m_button.m_press);
-    }
+    // TODO
 }

@@ -16,6 +16,6 @@ HIDKeyboard::~HIDKeyboard() {
 
 }
 
-void HIDKeyboard::updateKey(KeyButton button, bool press) {
+void HIDKeyboard::updateKey(KeyID button, bool press) {
     LOG((CLOG_DEBUG "updateKey: (%d %d)", button, press));
 }

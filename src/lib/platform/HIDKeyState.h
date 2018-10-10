@@ -31,5 +31,6 @@ protected:
 private:
     void                init();
     HIDKeyboard         m_keyboardDevice;
+    std::map<KeyButton, KeyID> m_serverIDToKeyIDMap;
 };
 

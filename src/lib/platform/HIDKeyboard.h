@@ -13,8 +13,8 @@ public:
     HIDKeyboard(const std::string &path);
     ~HIDKeyboard();
 
-    void updateKey(KeyButton button, bool press);
+    void updateKey(KeyID button, bool press);
 
 private:
-    static const UInt32 DATA_SIZE = 3;
+    static const UInt32 DATA_SIZE = 8;
 };
