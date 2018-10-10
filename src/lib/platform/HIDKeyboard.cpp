@@ -9,7 +9,7 @@ HIDKeyboard::HIDKeyboard(
         const std::string& path) :
         HIDDevice(path, DATA_SIZE)
 {
-    std::map<KeyID, char> keyToUSBMap = {
+    m_keyToUSBMap = {
             {0x0061, 0x04}, // a
             {0x0062, 0x05}, // b
             {0x0063, 0x06}, // c
@@ -146,22 +146,26 @@ HIDKeyboard::HIDKeyboard(
 //        {"find", 0x7e},
 //        {"mute", 0x7f},
     };
+
+    m_pressedKeys = new char[6];
+    memset(m_pressedKeys, 0, 6);
 }
 
 HIDKeyboard::~HIDKeyboard() {
-
+    delete m_pressedKeys;
 }
 
 void HIDKeyboard::pressKey(KeyID button) {
     LOG((CLOG_DEBUG "pressKey: (%d)", button));
-    auto keyIter = keyToUSBMap.find(button);
-    if (keyIter == keyToUSBMap.end()) {
+    auto keyIter = m_keyToUSBMap.find(button);
+    if (keyIter == m_keyToUSBMap.end()) {
         return;
     }
     char key = keyIter->second;
-    for (char &pressed_key : pressed_keys) {
-        if (pressed_key == 0) {
-            pressed_key = key;
+    for (int i = 0; i < 6; ++i) {
+        LOG((CLOG_DEBUG "pressKey: (pressed_key %c)", m_pressedKeys[i]));
+        if (m_pressedKeys[i] == 0) {
+            m_pressedKeys[i] = key;
             updateKeys();
             return;
         }
@@ -170,14 +174,14 @@ void HIDKeyboard::pressKey(KeyID button) {
 
 void HIDKeyboard::releaseKey(KeyID button) {
     LOG((CLOG_DEBUG "pressKey: (%d)", button));
-    auto keyIter = keyToUSBMap.find(button);
-    if (keyIter == keyToUSBMap.end()) {
+    auto keyIter = m_keyToUSBMap.find(button);
+    if (keyIter == m_keyToUSBMap.end()) {
         return;
     }
     char key = keyIter->second;
-    for (char &pressed_key : pressed_keys) {
-        if (pressed_key == key) {
-            pressed_key = 0;
+    for (int i = 0; i < 6; ++i) {
+        if (m_pressedKeys[i] == key) {
+            m_pressedKeys[i] = 0;
             updateKeys();
             return;
         }
@@ -185,10 +189,13 @@ void HIDKeyboard::releaseKey(KeyID button) {
 }
 
 void HIDKeyboard::updateKeys() {
-    m_data[0] = modifier;
+    m_data[0] = m_modifier;
     for (int i = 0; i < 6; ++i) {
-        m_data[i + 2] = pressed_keys[i];
+        m_data[i + 2] = m_pressedKeys[i];
     }
+    LOG((CLOG_DEBUG "updateKeys: (%d %d %d %d %d %d %d %d)",
+            m_data[0], m_data[1], m_data[2], m_data[3],
+            m_data[4], m_data[5], m_data[6], m_data[7]));
     update();
 }
 
