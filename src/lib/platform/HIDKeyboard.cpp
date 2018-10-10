@@ -6,7 +6,18 @@
 #include <X11/keysym.h>
 #include "HIDKeyboard.h"
 
-std::map<KeyID, char> HIDKeyboard::KEY_TO_USB = {
+std::map<KeyID, unsigned char> HIDKeyboard::KEY_TO_USB_MODIFIER = {
+        {kKeyControl_L, 0x01},
+        {kKeyControl_R, 0x10},
+        {kKeyShift_L, 0x02},
+        {kKeyShift_R, 0x20},
+        {kKeyAlt_L, 0x04},
+        {kKeyAlt_R, 0x40},
+        {kKeyMeta_L, 0x08},
+        {kKeyMeta_R, 0x80},
+};
+
+std::map<KeyID, unsigned char> HIDKeyboard::KEY_TO_USB_VALUE = {
         {XK_a, 0x04},
         {XK_b, 0x05},
         {XK_c, 0x06},
@@ -145,14 +156,22 @@ HIDKeyboard::~HIDKeyboard() {
 }
 
 void HIDKeyboard::pressKey(KeyID button) {
-    auto keyIter = KEY_TO_USB.find(button);
-    if (keyIter == KEY_TO_USB.end()) {
+    auto modifierIter = KEY_TO_USB_MODIFIER.find(button);
+    if (modifierIter != KEY_TO_USB_MODIFIER.end()) {
+        unsigned char modifier = modifierIter->second;
+        m_modifier |= modifier;
+        updateKeys();
         return;
     }
-    char key = keyIter->second;
-    for (char &pressed_key : m_pressedKeys) {
-        if (pressed_key == 0) {
-            pressed_key = key;
+
+    auto valueIter = KEY_TO_USB_VALUE.find(button);
+    if (valueIter == KEY_TO_USB_VALUE.end()) {
+        return;
+    }
+    unsigned char value = valueIter->second;
+    for (unsigned char &pressedKey : m_pressedKeys) {
+        if (pressedKey == 0) {
+            pressedKey = value;
             updateKeys();
             return;
         }
@@ -160,12 +179,21 @@ void HIDKeyboard::pressKey(KeyID button) {
 }
 
 void HIDKeyboard::releaseKey(KeyID button) {
-    auto keyIter = KEY_TO_USB.find(button);
-    if (keyIter == KEY_TO_USB.end()) {
+    auto modifierIter = KEY_TO_USB_MODIFIER.find(button);
+    if (modifierIter != KEY_TO_USB_MODIFIER.end()) {
+        unsigned char modifier = modifierIter->second;
+        m_modifier |= modifier;
+        m_modifier ^= modifier;
+        updateKeys();
         return;
     }
-    char key = keyIter->second;
-    for (char &pressedKey : m_pressedKeys) {
+
+    auto valueIter = KEY_TO_USB_VALUE.find(button);
+    if (valueIter == KEY_TO_USB_VALUE.end()) {
+        return;
+    }
+    unsigned char key = valueIter->second;
+    for (unsigned char &pressedKey : m_pressedKeys) {
         if (pressedKey == key) {
             pressedKey = 0;
             updateKeys();
