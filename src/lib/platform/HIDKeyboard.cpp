@@ -3,144 +3,134 @@
 //
 
 #include <base/Log.h>
+#include <X11/keysym.h>
 #include "HIDKeyboard.h"
 
 std::map<KeyID, char> HIDKeyboard::KEY_TO_USB = {
-        {0x0061, 0x04}, // a
-        {0x0062, 0x05}, // b
-        {0x0063, 0x06}, // c
-        {0x0064, 0x07}, // d
-        {0x0065, 0x08}, // e
-        {0x0066, 0x09}, // f
-        {0x0067, 0x0a}, // g
-        {0x0068, 0x0b}, // h
-        {0x0069, 0x0c}, // i
-        {0x006a, 0x0d}, // j
-        {0x006b, 0x0e}, // k
-        {0x006c, 0x0f}, // l
-        {0x006d, 0x10}, // m
-        {0x006e, 0x11}, // n
-        {0x006f, 0x12}, // o
-        {0x0070, 0x13}, // p
-        {0x0071, 0x14}, // q
-        {0x0072, 0x15}, // r
-        {0x0073, 0x16}, // s
-        {0x0074, 0x17}, // t
-        {0x0075, 0x18}, // u
-        {0x0076, 0x19}, // v
-        {0x0077, 0x1a}, // w
-        {0x0078, 0x1b}, // x
-        {0x0079, 0x1c}, // y
-        {0x007a, 0x1d}, // z
-        {0x0031, 0x1e}, // 1
-        {0x0032, 0x1f}, // 2
-        {0x0033, 0x20}, // 3
-        {0x0034, 0x21}, // 4
-        {0x0035, 0x22}, // 5
-        {0x0036, 0x23}, // 6
-        {0x0037, 0x24}, // 7
-        {0x0038, 0x25}, // 8
-        {0x0039, 0x26}, // 9
-        {0x0030, 0x27}, // 0
+        {XK_a, 0x04},
+        {XK_b, 0x05},
+        {XK_c, 0x06},
+        {XK_d, 0x07},
+        {XK_e, 0x08},
+        {XK_f, 0x09},
+        {XK_g, 0x0a},
+        {XK_h, 0x0b},
+        {XK_i, 0x0c},
+        {XK_j, 0x0d},
+        {XK_k, 0x0e},
+        {XK_l, 0x0f},
+        {XK_m, 0x10},
+        {XK_n, 0x11},
+        {XK_o, 0x12},
+        {XK_p, 0x13},
+        {XK_q, 0x14},
+        {XK_r, 0x15},
+        {XK_s, 0x16},
+        {XK_t, 0x17},
+        {XK_u, 0x18},
+        {XK_v, 0x19},
+        {XK_w, 0x1a},
+        {XK_x, 0x1b},
+        {XK_y, 0x1c},
+        {XK_z, 0x1d},
+        {XK_1, 0x1e},
+        {XK_2, 0x1f},
+        {XK_3, 0x20},
+        {XK_4, 0x21},
+        {XK_5, 0x22},
+        {XK_6, 0x23},
+        {XK_7, 0x24},
+        {XK_8, 0x25},
+        {XK_9, 0x26},
+        {XK_0, 0x27},
         {kKeyReturn, 0x28},
         {kKeyEscape, 0x29},
         {kKeyBackSpace, 0x2a},
         {kKeyTab, 0x2b},
-        {0x0020, 0x2c}, // space
-        {0x002d, 0x2d}, // dash
-        {0x003d, 0x2e}, // equals
-        {0x005b, 0x2f}, // [
-        {0x005d, 0x30}, // ]
-//        {"backslash", 0x31},
-//        {"hash", 0x32},
-//        {"number", 0x32},
-//        {"semicolon", 0x33},
-//        {"quote", 0x34},
-//        {"backquote", 0x35},
-//        {"tilde", 0x35},
-//        {"comma", 0x36},
-//        {"period", 0x37},
-//        {"stop", 0x37},
-//        {"slash", 0x38},
-//        {"caps-lock", 0x39},
-//        {"capslock", 0x39},
-//        {"f1", 0x3a},
-//        {"f2", 0x3b},
-//        {"f3", 0x3c},
-//        {"f4", 0x3d},
-//        {"f5", 0x3e},
-//        {"f6", 0x3f},
-//        {"f7", 0x40},
-//        {"f8", 0x41},
-//        {"f9", 0x42},
-//        {"f10", 0x43},
-//        {"f11", 0x44},
-//        {"f12", 0x45},
-//        {"print", 0x46},
-//        {"scroll-lock", 0x47},
-//        {"scrolllock", 0x47},
-//        {"pause", 0x48},
-//        {"insert", 0x49},
-//        {"home", 0x4a},
-//        {"pageup", 0x4b},
-//        {"pgup", 0x4b},
-//        {"del", 0x4c},
-//        {"delete", 0x4c},
-//        {"end", 0x4d},
-//        {"pagedown", 0x4e},
-//        {"pgdown", 0x4e},
-//        {"right", 0x4f},
-//        {"left", 0x50},
-//        {"down", 0x51},
-//        {"up", 0x52},
-//        {"num-lock", 0x53},
-//        {"numlock", 0x53},
-//        {"kp-divide", 0x54},
-//        {"kp-multiply", 0x55},
-//        {"kp-minus", 0x56},
-//        {"kp-plus", 0x57},
-//        {"kp-enter", 0x58},
-//        {"kp-return", 0x58},
-//        {"kp-1", 0x59},
-//        {"kp-2", 0x5a},
-//        {"kp-3", 0x5b},
-//        {"kp-4", 0x5c},
-//        {"kp-5", 0x5d},
-//        {"kp-6", 0x5e},
-//        {"kp-7", 0x5f},
-//        {"kp-8", 0x60},
-//        {"kp-9", 0x61},
-//        {"kp-0", 0x62},
-//        {"kp-period", 0x63},
-//        {"kp-stop", 0x63},
-//        {"application", 0x65},
-//        {"power", 0x66},
-//        {"kp-equals", 0x67},
-//        {"kp-equal", 0x67},
-//        {"f13", 0x68},
-//        {"f14", 0x69},
-//        {"f15", 0x6a},
-//        {"f16", 0x6b},
-//        {"f17", 0x6c},
-//        {"f18", 0x6d},
-//        {"f19", 0x6e},
-//        {"f20", 0x6f},
-//        {"f21", 0x70},
-//        {"f22", 0x71},
-//        {"f23", 0x72},
-//        {"f24", 0x73},
-//        {"execute", 0x74},
-//        {"help", 0x75},
-//        {"menu", 0x76},
-//        {"select", 0x77},
-//        {"cancel", 0x78},
-//        {"redo", 0x79},
-//        {"undo", 0x7a},
-//        {"cut", 0x7b},
-//        {"copy", 0x7c},
-//        {"paste", 0x7d},
-//        {"find", 0x7e},
-//        {"mute", 0x7f},
+        {XK_space, 0x2c},
+        {XK_minus, 0x2d},
+        {XK_equal, 0x2e},
+        {XK_bracketleft, 0x2f},
+        {XK_bracketright, 0x30},
+        {XK_backslash, 0x31},
+        {XK_numbersign, 0x32},
+        {XK_semicolon, 0x33},
+        {XK_quotedbl, 0x34},
+        {XK_quoteleft, 0x35},
+        {XK_asciitilde, 0x35},
+        {XK_comma, 0x36},
+        {XK_period, 0x37},
+        {XK_slash, 0x38},
+        {kKeyCapsLock, 0x39},
+        {kKeyF1, 0x3a},
+        {kKeyF2, 0x3b},
+        {kKeyF3, 0x3c},
+        {kKeyF4, 0x3d},
+        {kKeyF5, 0x3e},
+        {kKeyF6, 0x3f},
+        {kKeyF7, 0x40},
+        {kKeyF8, 0x41},
+        {kKeyF9, 0x42},
+        {kKeyF10, 0x43},
+        {kKeyF11, 0x44},
+        {kKeyF12, 0x45},
+        {kKeyPrint, 0x46},
+        {kKeyScrollLock, 0x47},
+        {kKeyPause, 0x48},
+        {kKeyInsert, 0x49},
+        {kKeyHome, 0x4a},
+        {kKeyPageUp, 0x4b},
+        {kKeyDelete, 0x4c},
+        {kKeyEnd, 0x4d},
+        {kKeyPageDown, 0x4e},
+        {kKeyRight, 0x4f},
+        {kKeyLeft, 0x50},
+        {kKeyDown, 0x51},
+        {kKeyUp, 0x52},
+        {kKeyNumLock, 0x53},
+        {kKeyKP_Divide, 0x54},
+        {kKeyKP_Multiply, 0x55},
+        {kKeyKP_Subtract, 0x56},
+        {kKeyKP_Add, 0x57},
+        {kKeyKP_Enter, 0x58},
+        {kKeyKP_1, 0x59},
+        {kKeyKP_2, 0x5a},
+        {kKeyKP_3, 0x5b},
+        {kKeyKP_4, 0x5c},
+        {kKeyKP_5, 0x5d},
+        {kKeyKP_6, 0x5e},
+        {kKeyKP_7, 0x5f},
+        {kKeyKP_8, 0x60},
+        {kKeyKP_9, 0x61},
+        {kKeyKP_0, 0x62},
+        {kKeyKP_Separator, 0x63},
+        //{"application", 0x65},
+        //{"power", 0x66},
+        {kKeyKP_Equal, 0x67},
+        {kKeyF13, 0x68},
+        {kKeyF14, 0x69},
+        {kKeyF15, 0x6a},
+        {kKeyF16, 0x6b},
+        {kKeyF17, 0x6c},
+        {kKeyF18, 0x6d},
+        {kKeyF19, 0x6e},
+        {kKeyF20, 0x6f},
+        {kKeyF21, 0x70},
+        {kKeyF22, 0x71},
+        {kKeyF23, 0x72},
+        {kKeyF24, 0x73},
+        {kKeyExecute, 0x74},
+        {kKeyHelp, 0x75},
+        {kKeyMenu, 0x76},
+        {kKeySelect, 0x77},
+        {kKeyCancel, 0x78},
+        {kKeyRedo, 0x79},
+        {kKeyUndo, 0x7a},
+        //{"cut", 0x7b},
+        //{"copy", 0x7c},
+        //{"paste", 0x7d},
+        {kKeyFind, 0x7e},
+        {kKeyAudioMute, 0x7f},
 };
 
 HIDKeyboard::HIDKeyboard(
@@ -155,16 +145,14 @@ HIDKeyboard::~HIDKeyboard() {
 }
 
 void HIDKeyboard::pressKey(KeyID button) {
-    LOG((CLOG_DEBUG "pressKey: (%d)", button));
     auto keyIter = KEY_TO_USB.find(button);
     if (keyIter == KEY_TO_USB.end()) {
         return;
     }
     char key = keyIter->second;
-    for (int i = 0; i < 6; ++i) {
-        LOG((CLOG_DEBUG "pressKey: (pressed_key %c)", m_pressedKeys[i]));
-        if (m_pressedKeys[i] == 0) {
-            m_pressedKeys[i] = key;
+    for (char &pressed_key : m_pressedKeys) {
+        if (pressed_key == 0) {
+            pressed_key = key;
             updateKeys();
             return;
         }
@@ -172,15 +160,14 @@ void HIDKeyboard::pressKey(KeyID button) {
 }
 
 void HIDKeyboard::releaseKey(KeyID button) {
-    LOG((CLOG_DEBUG "pressKey: (%d)", button));
     auto keyIter = KEY_TO_USB.find(button);
     if (keyIter == KEY_TO_USB.end()) {
         return;
     }
     char key = keyIter->second;
-    for (int i = 0; i < 6; ++i) {
-        if (m_pressedKeys[i] == key) {
-            m_pressedKeys[i] = 0;
+    for (char &pressedKey : m_pressedKeys) {
+        if (pressedKey == key) {
+            pressedKey = 0;
             updateKeys();
             return;
         }
@@ -192,9 +179,6 @@ void HIDKeyboard::updateKeys() {
     for (int i = 0; i < 6; ++i) {
         m_data[i + 2] = m_pressedKeys[i];
     }
-    LOG((CLOG_DEBUG "updateKeys: (%d %d %d %d %d %d %d %d)",
-            m_data[0], m_data[1], m_data[2], m_data[3],
-            m_data[4], m_data[5], m_data[6], m_data[7]));
     update();
 }
 
