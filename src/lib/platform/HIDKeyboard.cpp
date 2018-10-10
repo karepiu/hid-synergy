@@ -5,56 +5,52 @@
 #include <base/Log.h>
 #include "HIDKeyboard.h"
 
-HIDKeyboard::HIDKeyboard(
-        const std::string& path) :
-        HIDDevice(path, DATA_SIZE)
-{
-    m_keyToUSBMap = {
-            {0x0061, 0x04}, // a
-            {0x0062, 0x05}, // b
-            {0x0063, 0x06}, // c
-            {0x0064, 0x07}, // d
-            {0x0065, 0x08}, // e
-            {0x0066, 0x09}, // f
-            {0x0067, 0x0a}, // g
-            {0x0068, 0x0b}, // h
-            {0x0069, 0x0c}, // i
-            {0x006a, 0x0d}, // j
-            {0x006b, 0x0e}, // k
-            {0x006c, 0x0f}, // l
-            {0x006d, 0x10}, // m
-            {0x006e, 0x11}, // n
-            {0x006f, 0x12}, // o
-            {0x0070, 0x13}, // p
-            {0x0071, 0x14}, // q
-            {0x0072, 0x15}, // r
-            {0x0073, 0x16}, // s
-            {0x0074, 0x17}, // t
-            {0x0075, 0x18}, // u
-            {0x0076, 0x19}, // v
-            {0x0077, 0x1a}, // w
-            {0x0078, 0x1b}, // x
-            {0x0079, 0x1c}, // y
-            {0x007a, 0x1d}, // z
-            {0x0031, 0x1e}, // 1
-            {0x0032, 0x1f}, // 2
-            {0x0033, 0x20}, // 3
-            {0x0034, 0x21}, // 4
-            {0x0035, 0x22}, // 5
-            {0x0036, 0x23}, // 6
-            {0x0037, 0x24}, // 7
-            {0x0038, 0x25}, // 8
-            {0x0039, 0x26}, // 9
-            {0x0030, 0x27}, // 0
-            {kKeyReturn, 0x28},
-            {kKeyEscape, 0x29},
-            {kKeyBackSpace, 0x2a},
-            {kKeyTab, 0x2b},
-            {0x0020, 0x2c}, // space
-            {0x002d, 0x2d}, // dash
-            {0x003d, 0x2e}, // equals
-            {0x005b, 0x2f}, // [
-            {0x005d, 0x30}, // ]
+std::map<KeyID, char> HIDKeyboard::KEY_TO_USB = {
+        {0x0061, 0x04}, // a
+        {0x0062, 0x05}, // b
+        {0x0063, 0x06}, // c
+        {0x0064, 0x07}, // d
+        {0x0065, 0x08}, // e
+        {0x0066, 0x09}, // f
+        {0x0067, 0x0a}, // g
+        {0x0068, 0x0b}, // h
+        {0x0069, 0x0c}, // i
+        {0x006a, 0x0d}, // j
+        {0x006b, 0x0e}, // k
+        {0x006c, 0x0f}, // l
+        {0x006d, 0x10}, // m
+        {0x006e, 0x11}, // n
+        {0x006f, 0x12}, // o
+        {0x0070, 0x13}, // p
+        {0x0071, 0x14}, // q
+        {0x0072, 0x15}, // r
+        {0x0073, 0x16}, // s
+        {0x0074, 0x17}, // t
+        {0x0075, 0x18}, // u
+        {0x0076, 0x19}, // v
+        {0x0077, 0x1a}, // w
+        {0x0078, 0x1b}, // x
+        {0x0079, 0x1c}, // y
+        {0x007a, 0x1d}, // z
+        {0x0031, 0x1e}, // 1
+        {0x0032, 0x1f}, // 2
+        {0x0033, 0x20}, // 3
+        {0x0034, 0x21}, // 4
+        {0x0035, 0x22}, // 5
+        {0x0036, 0x23}, // 6
+        {0x0037, 0x24}, // 7
+        {0x0038, 0x25}, // 8
+        {0x0039, 0x26}, // 9
+        {0x0030, 0x27}, // 0
+        {kKeyReturn, 0x28},
+        {kKeyEscape, 0x29},
+        {kKeyBackSpace, 0x2a},
+        {kKeyTab, 0x2b},
+        {0x0020, 0x2c}, // space
+        {0x002d, 0x2d}, // dash
+        {0x003d, 0x2e}, // equals
+        {0x005b, 0x2f}, // [
+        {0x005d, 0x30}, // ]
 //        {"backslash", 0x31},
 //        {"hash", 0x32},
 //        {"number", 0x32},
@@ -145,20 +141,23 @@ HIDKeyboard::HIDKeyboard(
 //        {"paste", 0x7d},
 //        {"find", 0x7e},
 //        {"mute", 0x7f},
-    };
+};
 
-    m_pressedKeys = new char[6];
-    memset(m_pressedKeys, 0, 6);
+HIDKeyboard::HIDKeyboard(
+        const std::string& path) :
+        HIDDevice(path, DATA_SIZE)
+{
+
 }
 
 HIDKeyboard::~HIDKeyboard() {
-    delete m_pressedKeys;
+
 }
 
 void HIDKeyboard::pressKey(KeyID button) {
     LOG((CLOG_DEBUG "pressKey: (%d)", button));
-    auto keyIter = m_keyToUSBMap.find(button);
-    if (keyIter == m_keyToUSBMap.end()) {
+    auto keyIter = KEY_TO_USB.find(button);
+    if (keyIter == KEY_TO_USB.end()) {
         return;
     }
     char key = keyIter->second;
@@ -174,8 +173,8 @@ void HIDKeyboard::pressKey(KeyID button) {
 
 void HIDKeyboard::releaseKey(KeyID button) {
     LOG((CLOG_DEBUG "pressKey: (%d)", button));
-    auto keyIter = m_keyToUSBMap.find(button);
-    if (keyIter == m_keyToUSBMap.end()) {
+    auto keyIter = KEY_TO_USB.find(button);
+    if (keyIter == KEY_TO_USB.end()) {
         return;
     }
     char key = keyIter->second;

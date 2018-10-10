@@ -22,7 +22,7 @@ HIDKeyState::HIDKeyState(
 }
 
 HIDKeyState::HIDKeyState(
-        IEventQueue *events, synergy::KeyMap& keyMap, HIDKeyboard keyboardDevice) :
+        IEventQueue *events, synergy::KeyMap& keyMap, const std::string& keyboardDevice) :
         KeyState(events, keyMap),
         m_keyboardDevice(keyboardDevice)
 {

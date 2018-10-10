@@ -15,7 +15,6 @@ HIDScreen::HIDScreen(
         IEventQueue *events) :
     PlatformScreen(events),
     m_mouseDevice(mouseDevice),
-    m_keyboardDevice(keyboardDevice),
     m_touchDevice(touchDevice),
     m_w(screenWidth),
     m_h(screenHeight),
@@ -26,7 +25,7 @@ HIDScreen::HIDScreen(
 {
     // TODO
 
-    m_keyState = new HIDKeyState(events, m_keyMap, m_keyboardDevice);
+    m_keyState = new HIDKeyState(events, m_keyMap, keyboardDevice);
 
     // install event handlers
     m_events->adoptHandler(Event::kSystem, m_events->getSystemTarget(),

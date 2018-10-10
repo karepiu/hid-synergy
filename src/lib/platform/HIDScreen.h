@@ -71,7 +71,6 @@ protected:
 
 private:
     HIDMouse            m_mouseDevice;
-    HIDKeyboard         m_keyboardDevice;
     HIDTouch            m_touchDevice;
     SInt32              m_w, m_h;
     int                 m_mousex;
