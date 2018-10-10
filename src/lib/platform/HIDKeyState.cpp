@@ -69,7 +69,7 @@ void HIDKeyState::getKeyMap(synergy::KeyMap &keyMap)
 void HIDKeyState::fakeKeyDown(KeyID id, KeyModifierMask mask, KeyButton serverID) {
     LOG((CLOG_DEBUG "fakeKeyDown (%d, %d)", serverID, id));
     m_serverIDToKeyIDMap[serverID] = id;
-    m_keyboardDevice.updateKey(id, true);
+    m_keyboardDevice.pressKey(id);
 }
 
 bool HIDKeyState::fakeKeyUp(KeyButton serverID) {
@@ -78,7 +78,7 @@ bool HIDKeyState::fakeKeyUp(KeyButton serverID) {
     if (id == m_serverIDToKeyIDMap.end()) {
         return false;
     } else {
-        m_keyboardDevice.updateKey(id->second, false);
+        m_keyboardDevice.releaseKey(id->second);
         m_serverIDToKeyIDMap.erase(serverID);
         return true;
     }
