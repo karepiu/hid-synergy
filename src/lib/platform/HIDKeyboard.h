@@ -19,10 +19,10 @@ public:
     void updateKeys();
 
 private:
+    std::map<KeyID, char> keyToUSBMap;
     char modifier = 0;
     char pressed_keys[6] = {0};
     static const UInt32 DATA_SIZE = 8;
 
-    static std::map<KeyID, char> KEY_TO_USB;
 
 };
