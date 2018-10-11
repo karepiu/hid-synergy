@@ -110,12 +110,14 @@ ClientApp::help()
 {
 #if WINAPI_XWINDOWS
 #  define WINAPI_ARG \
-    " [--display <display>] [--no-xinitthreads] [--hid <mouse> <keyboard>]"
+    " [--display <display>] [--no-xinitthreads] [--hid <mouse> <keyboard> <digitzer> <width> <height>]"
 #  define WINAPI_INFO \
     "      --display <display>  connect to the X server at <display>\n" \
     "      --no-xinitthreads    do not call XInitThreads()\n" \
-    "      --hid <mouse>        run in HID mode with the given <mouse> device and\n" \
-    "        <keyboard>         <keyboard> device\n"
+    "      --hid <mouse>        run in HID mode with the given <mouse>, <keyboard>\n" \
+    "        <keyboard>          and <digitizer> devices, with a screen resolution\n" \
+    "        <digitzer>          of <width> by <height>.\n" \
+    "        <width> <height>\n"
 #else
 #  define WINAPI_ARG
 #  define WINAPI_INFO
