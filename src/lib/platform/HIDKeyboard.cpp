@@ -27,7 +27,7 @@ std::map<KeyID, unsigned char> HIDKeyboard::KEY_TO_USB_VALUE = {
         {XK_d, 0x07},
         {XK_D, 0x07},
         {XK_e, 0x08},
-        {XK_E, 0x08}
+        {XK_E, 0x08},
         {XK_f, 0x09},
         {XK_F, 0x09},
         {XK_g, 0x0a},
@@ -57,7 +57,7 @@ std::map<KeyID, unsigned char> HIDKeyboard::KEY_TO_USB_VALUE = {
         {XK_s, 0x16},
         {XK_S, 0x16},
         {XK_t, 0x17},
-        {XK_T, 0x17}
+        {XK_T, 0x17},
         {XK_u, 0x18},
         {XK_U, 0x18},
         {XK_v, 0x19},
@@ -73,17 +73,17 @@ std::map<KeyID, unsigned char> HIDKeyboard::KEY_TO_USB_VALUE = {
         {XK_1, 0x1e},
         {XK_exclam, 0x1e},
         {XK_2, 0x1f},
-        {XK_at, 0x1f}
+        {XK_at, 0x1f},
         {XK_3, 0x20},
         {XK_numbersign, 0x20},
         {XK_4, 0x21},
-        {XK_dollar, 0x21}
+        {XK_dollar, 0x21},
         {XK_5, 0x22},
         {XK_percent, 0x22},
         {XK_6, 0x23},
         {XK_asciicircum, 0x23},
         {XK_7, 0x24},
-        {XK_ampersand, 0x24}
+        {XK_ampersand, 0x24},
         {XK_8, 0x25},
         {XK_asterisk, 0x25},
         {XK_9, 0x26},
