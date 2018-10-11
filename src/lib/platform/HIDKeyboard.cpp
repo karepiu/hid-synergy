@@ -159,7 +159,7 @@ std::map<KeyID, unsigned char> HIDKeyboard::KEY_TO_USB_VALUE = {
         {kKeyKP_8, 0x60},
         {kKeyKP_9, 0x61},
         {kKeyKP_0, 0x62},
-        {kKeyKP_Separator, 0x63},
+        {kKeyKP_Decimal, 0x63},
         //{"application", 0x65},
         //{"power", 0x66},
         {kKeyKP_Equal, 0x67},
