@@ -51,3 +51,5 @@ client device.
 - The digitizer precision is currently limited to a resolution of 255 * 255,
 and the bottom and right edges of the screen are unreachable
 - The mouse wheel functionality isn't implemented yet
+- The clipboard is not shared with the client device. This could potentially
+be done with a companion app, or in a limited auto-type fashion for just text.
