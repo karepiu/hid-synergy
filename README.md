@@ -48,6 +48,6 @@ client device.
 
 ## Known Issues/Limitations
 
-- The mouse is currently limited to a resolution of 255 * 255,
+- The digitizer precision is currently limited to a resolution of 255 * 255,
 and the bottom and right edges of the screen are unreachable
 - The mouse wheel functionality isn't implemented yet
