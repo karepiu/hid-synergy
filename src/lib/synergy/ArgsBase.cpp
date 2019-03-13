@@ -29,6 +29,12 @@ m_daemon(true), // backward compatibility for unix (daemon by default)
 #endif
 #if WINAPI_XWINDOWS
 m_disableXInitThreads(false),
+m_hid(false),
+m_mouseDevice(""),
+m_keyboardDevice(""),
+m_touchDevice(""),
+m_screenWidth(0),
+m_screenHeight(0),
 #endif
 m_backend(false),
 m_restartable(true),

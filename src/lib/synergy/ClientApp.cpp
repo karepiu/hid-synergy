@@ -49,6 +49,7 @@
 #include "platform/MSWindowsScreen.h"
 #elif WINAPI_XWINDOWS
 #include "platform/XWindowsScreen.h"
+#include "platform/HIDScreen.h"
 #elif WINAPI_CARBON
 #include "platform/OSXScreen.h"
 #endif
@@ -110,10 +111,14 @@ ClientApp::help()
 {
 #if WINAPI_XWINDOWS
 #  define WINAPI_ARG \
-    " [--display <display>] [--no-xinitthreads]"
+    " [--display <display>] [--no-xinitthreads] [--hid <mouse> <keyboard> <digitzer> <width> <height>]"
 #  define WINAPI_INFO \
     "      --display <display>  connect to the X server at <display>\n" \
-    "      --no-xinitthreads    do not call XInitThreads()\n"
+    "      --no-xinitthreads    do not call XInitThreads()\n" \
+    "      --hid <mouse>        run in HID mode with the given <mouse>, <keyboard>\n" \
+    "        <keyboard>          and <digitizer> devices, with a screen resolution\n" \
+    "        <digitzer>          of <width> by <height>.\n" \
+    "        <width> <height>\n"
 #else
 #  define WINAPI_ARG
 #  define WINAPI_INFO
@@ -176,9 +181,18 @@ ClientApp::createScreen()
     return new synergy::Screen(new MSWindowsScreen(
         false, args().m_noHooks, args().m_stopOnDeskSwitch, m_events), m_events);
 #elif WINAPI_XWINDOWS
-    return new synergy::Screen(new XWindowsScreen(
-        args().m_display, false, args().m_disableXInitThreads,
-        args().m_yscroll, m_events), m_events);
+    if (args().m_hid) {
+        return new synergy::Screen(new HIDScreen(
+                args().m_mouseDevice, args().m_keyboardDevice, args().m_touchDevice,
+                args().m_screenWidth, args().m_screenHeight,
+                m_events), m_events);
+        //m_bye(kExitArgs);
+    }
+    else {
+        return new synergy::Screen(new XWindowsScreen(
+                args().m_display, false, args().m_disableXInitThreads,
+                args().m_yscroll, m_events), m_events);
+    }
 #elif WINAPI_CARBON
     return new synergy::Screen(new OSXScreen(m_events, false), m_events);
 #endif

@@ -45,6 +45,12 @@ public:
 #endif
 #if WINAPI_XWINDOWS
     bool                m_disableXInitThreads;
+    bool                m_hid;
+    String              m_mouseDevice;
+    String              m_keyboardDevice;
+    String              m_touchDevice;
+    int                 m_screenWidth;
+    int                 m_screenHeight;
 #endif
     bool                m_shouldExit;
     String                m_synergyAddress;
