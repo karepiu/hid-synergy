@@ -13,7 +13,9 @@ public:
     ~HIDMouse();
 
     void updateButton(ButtonID button, bool press);
-
+    
+    void updateWheel(float x, float y);
+    
 private:
-    static const UInt32 DATA_SIZE = 3;
+    static const UInt32 DATA_SIZE = 6;
 };

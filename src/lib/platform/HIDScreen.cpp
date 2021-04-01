@@ -136,8 +136,12 @@ void HIDScreen::fakeMouseRelativeMove(SInt32 dx, SInt32 dy) const
     // TODO
 }
 
-void HIDScreen::fakeMouseWheel(SInt32 xDelta, SInt32 yDelta) const
+void HIDScreen::fakeMouseWheel(SInt32 xDelta, SInt32 yDelta) 
 {
+    LOG((CLOG_DEBUG "fakeMouseWheel: (%d %d)", xDelta, yDelta));
+    float x = (float) xDelta;
+    float y = (float) yDelta;
+    m_mouseDevice.updateWheel( x, y );
     // TODO
 }
 

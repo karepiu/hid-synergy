@@ -43,7 +43,27 @@ void HIDMouse::updateButton(ButtonID button, bool press) {
         m_data[0] ^= mask;
     } else if (!press && (m_data[0] & mask) != 0) {
         m_data[0] ^= mask;
-    }
-
+    } 
+    
     update();
 }
+
+void HIDMouse::updateWheel(float x, float y) {
+    
+    LOG((CLOG_DEBUG "%u %u", x, y));
+    
+    LOG((CLOG_DEBUG "%x", m_data[5]));
+    
+    if ( y < 0 ) {
+        m_data[5] = 0xFF;
+    }
+    else if ( y > 0 ) {
+        m_data[5] = 0x01;
+    }
+    
+    update();
+}
+
+
+
+
