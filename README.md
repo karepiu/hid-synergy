@@ -24,11 +24,7 @@ contains a necessary workaround.
 
 HID Synergy requires three USB devices, a mouse, a keyboard, and a
 digitzer (for absolute mouse functionality), so use
-[this hid.sh](https://gist.github.com/alexvanyo/408870730c5337111ef07b23d48ed742)
-instead of the one from the tutorial.
-
-Ensure that the Raspberry Pi Zero W is being picked up as a USB device
-by running `hid-gadget-test.c` with the mouse and keyboard.
+[this repos hid.sh] instead of the one from the tutorial.
 
 ## Usage
 
@@ -46,10 +42,14 @@ desired client screen. Modifying these values while maintaining the
 same aspect ratio will change how quickly the mouse will move on the
 client device.
 
-## Known Issues/Limitations
+## Licenses/Contributors etc. 
 
-- The digitizer precision is currently limited to a resolution of 255 * 255,
-and the bottom and right edges of the screen are unreachable
-- The mouse wheel functionality isn't implemented yet
-- The clipboard is not shared with the client device. This could potentially
-be done with a companion app, or in a limited auto-type fashion for just text.
+This project is based on:
+
+Alex Vanyo - https://github.com/alexvanyo/hid-synergy
+Johannes Berg - https://git.sipsolutions.net/usbhid-synergy.git/
+
+Thank you both. 
+
+
+
