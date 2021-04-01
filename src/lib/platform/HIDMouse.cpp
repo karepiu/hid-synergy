@@ -45,6 +45,8 @@ void HIDMouse::updateButton(ButtonID button, bool press) {
         m_data[0] ^= mask;
     } 
     
+    m_data[5] = 0x00;
+        
     update();
 }
 
